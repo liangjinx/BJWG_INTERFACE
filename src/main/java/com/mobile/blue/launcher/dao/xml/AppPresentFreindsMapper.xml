@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mobile.blue.launcher.dao.mapper.AppPresentFreindsMapper" >
+  <resultMap id="BaseResultMap" type="com.mobile.blue.launcher.model.AppPresentFreinds" >
+    <constructor >
+      <idArg column="present_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="present_user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="present_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="presented_user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="presented_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="present_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="total_money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="ctime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="present_relation_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="presented_relation_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    present_id, present_user_id, present_user, presented_user_id, presented_user, present_num, 
+    price, total_money, ctime, type, present_relation_id, presented_relation_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mobile.blue.launcher.model.Example.AppPresentFreindsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from bjwg_present_freinds
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="page != null" >
+      limit #{page.begin} , #{page.length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bjwg_present_freinds
+    where present_id = #{presentId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bjwg_present_freinds
+    where present_id = #{presentId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mobile.blue.launcher.model.AppPresentFreinds" >
+    insert into bjwg_present_freinds (present_id, present_user_id, present_user, 
+      presented_user_id, presented_user, present_num, 
+      price, total_money, ctime, 
+      type, present_relation_id, presented_relation_id
+      )
+    values (#{presentId,jdbcType=BIGINT}, #{presentUserId,jdbcType=BIGINT}, #{presentUser,jdbcType=VARCHAR}, 
+      #{presentedUserId,jdbcType=BIGINT}, #{presentedUser,jdbcType=VARCHAR}, #{presentNum,jdbcType=INTEGER}, 
+      #{price,jdbcType=DECIMAL}, #{totalMoney,jdbcType=DECIMAL}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=TINYINT}, #{presentRelationId,jdbcType=BIGINT}, #{presentedRelationId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mobile.blue.launcher.model.AppPresentFreinds" >
+    insert into bjwg_present_freinds
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="presentId != null" >
+        present_id,
+      </if>
+      <if test="presentUserId != null" >
+        present_user_id,
+      </if>
+      <if test="presentUser != null" >
+        present_user,
+      </if>
+      <if test="presentedUserId != null" >
+        presented_user_id,
+      </if>
+      <if test="presentedUser != null" >
+        presented_user,
+      </if>
+      <if test="presentNum != null" >
+        present_num,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="totalMoney != null" >
+        total_money,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="presentRelationId != null" >
+        present_relation_id,
+      </if>
+      <if test="presentedRelationId != null" >
+        presented_relation_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="presentId != null" >
+        #{presentId,jdbcType=BIGINT},
+      </if>
+      <if test="presentUserId != null" >
+        #{presentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="presentUser != null" >
+        #{presentUser,jdbcType=VARCHAR},
+      </if>
+      <if test="presentedUserId != null" >
+        #{presentedUserId,jdbcType=BIGINT},
+      </if>
+      <if test="presentedUser != null" >
+        #{presentedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="presentNum != null" >
+        #{presentNum,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="totalMoney != null" >
+        #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="presentRelationId != null" >
+        #{presentRelationId,jdbcType=BIGINT},
+      </if>
+      <if test="presentedRelationId != null" >
+        #{presentedRelationId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mobile.blue.launcher.model.Example.AppPresentFreindsExample" resultType="java.lang.Integer" >
+    select count(*) from bjwg_present_freinds
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mobile.blue.launcher.model.AppPresentFreinds" >
+    update bjwg_present_freinds
+    <set >
+      <if test="presentUserId != null" >
+        present_user_id = #{presentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="presentUser != null" >
+        present_user = #{presentUser,jdbcType=VARCHAR},
+      </if>
+      <if test="presentedUserId != null" >
+        presented_user_id = #{presentedUserId,jdbcType=BIGINT},
+      </if>
+      <if test="presentedUser != null" >
+        presented_user = #{presentedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="presentNum != null" >
+        present_num = #{presentNum,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="totalMoney != null" >
+        total_money = #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="presentRelationId != null" >
+        present_relation_id = #{presentRelationId,jdbcType=BIGINT},
+      </if>
+      <if test="presentedRelationId != null" >
+        presented_relation_id = #{presentedRelationId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where present_id = #{presentId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mobile.blue.launcher.model.AppPresentFreinds" >
+    update bjwg_present_freinds
+    set present_user_id = #{presentUserId,jdbcType=BIGINT},
+      present_user = #{presentUser,jdbcType=VARCHAR},
+      presented_user_id = #{presentedUserId,jdbcType=BIGINT},
+      presented_user = #{presentedUser,jdbcType=VARCHAR},
+      present_num = #{presentNum,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      total_money = #{totalMoney,jdbcType=DECIMAL},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=TINYINT},
+      present_relation_id = #{presentRelationId,jdbcType=BIGINT},
+      presented_relation_id = #{presentedRelationId,jdbcType=BIGINT}
+    where present_id = #{presentId,jdbcType=BIGINT}
+  </update>
+</mapper>

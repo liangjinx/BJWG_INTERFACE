@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mobile.blue.launcher.dao.mapper.AppPreorderMapper" >
+  <resultMap id="BaseResultMap" type="com.mobile.blue.launcher.model.AppPreorder" >
+    <constructor >
+      <idArg column="project_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <idArg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="ctime" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    project_id, user_id, ctime, num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mobile.blue.launcher.model.Example.AppPreorderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from bjwg_user_preorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+      <if test="page != null" >
+      limit #{page.begin} , #{page.length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.mobile.blue.launcher.model.AppPreorderKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from bjwg_user_preorder
+    where project_id = #{projectId,jdbcType=BIGINT}
+      and user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.mobile.blue.launcher.model.AppPreorderKey" >
+    delete from bjwg_user_preorder
+    where project_id = #{projectId,jdbcType=BIGINT}
+      and user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mobile.blue.launcher.model.AppPreorder" >
+    insert into bjwg_user_preorder (project_id, user_id, ctime, 
+      num)
+    values (#{projectId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{ctime,jdbcType=DATE}, 
+      #{num,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mobile.blue.launcher.model.AppPreorder" >
+    insert into bjwg_user_preorder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="projectId != null" >
+        #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=DATE},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mobile.blue.launcher.model.Example.AppPreorderExample" resultType="java.lang.Integer" >
+    select count(*) from bjwg_user_preorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mobile.blue.launcher.model.AppPreorder" >
+    update bjwg_user_preorder
+    <set >
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=DATE},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+    </set>
+    where project_id = #{projectId,jdbcType=BIGINT}
+      and user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mobile.blue.launcher.model.AppPreorder" >
+    update bjwg_user_preorder
+    set ctime = #{ctime,jdbcType=DATE},
+      num = #{num,jdbcType=INTEGER}
+    where project_id = #{projectId,jdbcType=BIGINT}
+      and user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>

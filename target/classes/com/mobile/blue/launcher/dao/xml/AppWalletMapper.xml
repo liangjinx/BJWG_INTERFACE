@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mobile.blue.launcher.dao.mapper.AppWalletMapper" >
+  <resultMap id="BaseResultMap" type="com.mobile.blue.launcher.model.AppWallet" >
+    <constructor >
+      <idArg column="wallet_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="pay_password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="json" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    wallet_id, user_id, money, status, pay_password, json
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mobile.blue.launcher.model.Example.AppWalletExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from bjwg_wallet
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+     <if test="page != null" >
+      limit #{page.begin} , #{page.length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bjwg_wallet
+    where wallet_id = #{walletId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bjwg_wallet
+    where wallet_id = #{walletId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mobile.blue.launcher.model.AppWallet" >
+    insert into bjwg_wallet (wallet_id, user_id, money, 
+      status, pay_password, json
+      )
+    values (#{walletId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{money,jdbcType=DECIMAL}, 
+      #{status,jdbcType=TINYINT}, #{payPassword,jdbcType=VARCHAR}, #{json,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mobile.blue.launcher.model.AppWallet" >
+    insert into bjwg_wallet
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="walletId != null" >
+        wallet_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="payPassword != null" >
+        pay_password,
+      </if>
+      <if test="json != null" >
+        json,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="walletId != null" >
+        #{walletId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="payPassword != null" >
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="json != null" >
+        #{json,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mobile.blue.launcher.model.Example.AppWalletExample" resultType="java.lang.Integer" >
+    select count(*) from bjwg_wallet
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mobile.blue.launcher.model.AppWallet" >
+    update bjwg_wallet
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="payPassword != null" >
+        pay_password = #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="json != null" >
+        json = #{json,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where wallet_id = #{walletId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mobile.blue.launcher.model.AppWallet" >
+    update bjwg_wallet
+    set user_id = #{userId,jdbcType=BIGINT},
+      money = #{money,jdbcType=DECIMAL},
+      status = #{status,jdbcType=TINYINT},
+      pay_password = #{payPassword,jdbcType=VARCHAR},
+      json = #{json,jdbcType=VARCHAR}
+    where wallet_id = #{walletId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mobile.blue.launcher.dao.mapper.AppOrderAddressMapper">
+	<resultMap id="BaseResultMap"
+		type="com.mobile.blue.launcher.model.AppOrderAddress">
+		<constructor>
+			<idArg column="order_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="province" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="city" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="link_man" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="link_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+		</constructor>
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		order_id, user_id, province, city, address, link_man, link_phone, remark
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.mobile.blue.launcher.model.Example.AppOrderAddressExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'false' as QUERYID,
+		<include refid="Base_Column_List" />
+		from bjwg_order_address
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="page != null">
+			limit #{page.begin} , #{page.length}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from bjwg_order_address
+		where order_id = #{orderId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from bjwg_order_address
+		where order_id = #{orderId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.mobile.blue.launcher.model.AppOrderAddress">
+		insert into bjwg_order_address (order_id, user_id, province,
+		city, address, link_man,
+		link_phone, remark)
+		values (#{orderId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
+		#{province,jdbcType=BIGINT},
+		#{city,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, #{linkMan,jdbcType=VARCHAR},
+		#{linkPhone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.mobile.blue.launcher.model.AppOrderAddress">
+		insert into bjwg_order_address
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="province != null">
+				province,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="linkMan != null">
+				link_man,
+			</if>
+			<if test="linkPhone != null">
+				link_phone,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				#{orderId,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="province != null">
+				#{province,jdbcType=BIGINT},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=BIGINT},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="linkMan != null">
+				#{linkMan,jdbcType=VARCHAR},
+			</if>
+			<if test="linkPhone != null">
+				#{linkPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.mobile.blue.launcher.model.Example.AppOrderAddressExample"
+		resultType="java.lang.Integer">
+		select count(*) from bjwg_order_address
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.mobile.blue.launcher.model.AppOrderAddress">
+		update bjwg_order_address
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=BIGINT},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=BIGINT},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="linkMan != null">
+				link_man = #{linkMan,jdbcType=VARCHAR},
+			</if>
+			<if test="linkPhone != null">
+				link_phone = #{linkPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where order_id = #{orderId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.mobile.blue.launcher.model.AppOrderAddress">
+		update bjwg_order_address
+		set user_id = #{userId,jdbcType=BIGINT},
+		province = #{province,jdbcType=BIGINT},
+		city = #{city,jdbcType=BIGINT},
+		address = #{address,jdbcType=VARCHAR},
+		link_man = #{linkMan,jdbcType=VARCHAR},
+		link_phone = #{linkPhone,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR}
+		where order_id = #{orderId,jdbcType=BIGINT}
+	</update>
+</mapper>

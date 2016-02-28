@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mobile.blue.launcher.dao.mapper.AppOrderMapper">
+	<resultMap id="BaseResultMap" type="com.mobile.blue.launcher.model.AppOrder">
+		<constructor>
+			<idArg column="order_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="order_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="ctime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+			<arg column="type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+			<arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+			<arg column="num" jdbcType="SMALLINT" javaType="java.lang.Short" />
+			<arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+			<arg column="total_money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+			<arg column="pay_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+			<arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="product_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="pay_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+			<arg column="relation_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="relation_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="over_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+			<arg column="product_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="sub_order_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="confirm_time" jdbcType="DATE" javaType="java.util.Date" />
+			<arg column="prepay_order_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="is_show" jdbcType="TINYINT" javaType="java.lang.Byte" />
+		</constructor>
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		order_id, order_code, ctime, type, status, num, price,
+		total_money, pay_time,
+		user_id,
+		remark, product_name, pay_type,
+		relation_id, relation_name, over_time,
+		product_img,
+		sub_order_id,
+		confirm_time, prepay_order_code, is_show
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.mobile.blue.launcher.model.Example.AppOrderExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'false' as QUERYID,
+		<include refid="Base_Column_List" />
+		from bjwg_order
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="page != null">
+			limit #{page.begin} , #{page.length}
+		</if>
+	</select>
+	<select id="selectByRanking"
+		parameterType="com.mobile.blue.launcher.model.Example.AppOrderExample"
+		resultType="com.mobile.blue.view.OrderRankingVo">
+		select user_id,sum(num) count from bjwg_order
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		group by user_id
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="page != null">
+			limit #{page.begin} , #{page.length}
+		</if>
+	</select>
+	<select id="countByRanking"
+		parameterType="com.mobile.blue.launcher.model.Example.AppOrderExample"
+		resultType="java.lang.Integer">
+		select count(*) count from (select user_id,sum(num) count from
+		bjwg_order
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		group by user_id
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="page != null">
+			limit #{page.begin} , #{page.length}
+		</if>
+		) orderview
+
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from bjwg_order
+		where order_id = #{orderId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		bjwg_order
+		where order_id = #{orderId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.mobile.blue.launcher.model.AppOrder">
+		insert into bjwg_order
+		(order_id, order_code, ctime,
+		type, status, num,
+		price, total_money,
+		pay_time,
+		user_id, remark, product_name,
+		pay_type, relation_id,
+		relation_name,
+		over_time, product_img, sub_order_id,
+		confirm_time,
+		prepay_order_code, is_show
+		)
+		values (#{orderId,jdbcType=BIGINT},
+		#{orderCode,jdbcType=VARCHAR},
+		#{ctime,jdbcType=TIMESTAMP},
+		#{type,jdbcType=TINYINT}, #{status,jdbcType=TINYINT},
+		#{num,jdbcType=SMALLINT},
+		#{price,jdbcType=DECIMAL},
+		#{totalMoney,jdbcType=DECIMAL},
+		#{payTime,jdbcType=TIMESTAMP},
+		#{userId,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR},
+		#{productName,jdbcType=VARCHAR},
+		#{payType,jdbcType=TINYINT},
+		#{relationId,jdbcType=BIGINT},
+		#{relationName,jdbcType=VARCHAR},
+		#{overTime,jdbcType=TIMESTAMP}, #{productImg,jdbcType=VARCHAR},
+		#{subOrderId,jdbcType=BIGINT},
+		#{confirmTime,jdbcType=DATE},
+		#{prepayOrderCode,jdbcType=VARCHAR},
+		#{isShow,jdbcType=TINYINT}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.mobile.blue.launcher.model.AppOrder">
+		insert into bjwg_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="ctime != null">
+				ctime,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="num != null">
+				num,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="totalMoney != null">
+				total_money,
+			</if>
+			<if test="payTime != null">
+				pay_time,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="productName != null">
+				product_name,
+			</if>
+			<if test="payType != null">
+				pay_type,
+			</if>
+			<if test="relationId != null">
+				relation_id,
+			</if>
+			<if test="relationName != null">
+				relation_name,
+			</if>
+			<if test="overTime != null">
+				over_time,
+			</if>
+			<if test="productImg != null">
+				product_img,
+			</if>
+			<if test="subOrderId != null">
+				sub_order_id,
+			</if>
+			<if test="confirmTime != null">
+				confirm_time,
+			</if>
+			<if test="prepayOrderCode != null">
+				prepay_order_code,
+			</if>
+			<if test="isShow != null">
+				is_show,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				#{orderId,jdbcType=BIGINT},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="ctime != null">
+				#{ctime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=TINYINT},
+			</if>
+			<if test="num != null">
+				#{num,jdbcType=SMALLINT},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DECIMAL},
+			</if>
+			<if test="totalMoney != null">
+				#{totalMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="payTime != null">
+				#{payTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="productName != null">
+				#{productName,jdbcType=VARCHAR},
+			</if>
+			<if test="payType != null">
+				#{payType,jdbcType=TINYINT},
+			</if>
+			<if test="relationId != null">
+				#{relationId,jdbcType=BIGINT},
+			</if>
+			<if test="relationName != null">
+				#{relationName,jdbcType=VARCHAR},
+			</if>
+			<if test="overTime != null">
+				#{overTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="productImg != null">
+				#{productImg,jdbcType=VARCHAR},
+			</if>
+			<if test="subOrderId != null">
+				#{subOrderId,jdbcType=BIGINT},
+			</if>
+			<if test="confirmTime != null">
+				#{confirmTime,jdbcType=DATE},
+			</if>
+			<if test="prepayOrderCode != null">
+				#{prepayOrderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="isShow != null">
+				#{isShow,jdbcType=TINYINT},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.mobile.blue.launcher.model.Example.AppOrderExample"
+		resultType="java.lang.Integer">
+		select count(*) from bjwg_order
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.mobile.blue.launcher.model.AppOrder">
+		update bjwg_order
+		<set>
+			<if test="ctime != null">
+				ctime = #{ctime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=TINYINT},
+			</if>
+			<if test="num != null">
+				num = #{num,jdbcType=SMALLINT},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=DECIMAL},
+			</if>
+			<if test="totalMoney != null">
+				total_money = #{totalMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="payTime != null">
+				pay_time = #{payTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="productName != null">
+				product_name = #{productName,jdbcType=VARCHAR},
+			</if>
+			<if test="payType != null">
+				pay_type = #{payType,jdbcType=TINYINT},
+			</if>
+			<if test="relationId != null">
+				relation_id = #{relationId,jdbcType=BIGINT},
+			</if>
+			<if test="relationName != null">
+				relation_name = #{relationName,jdbcType=VARCHAR},
+			</if>
+			<if test="overTime != null">
+				over_time = #{overTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="productImg != null">
+				product_img = #{productImg,jdbcType=VARCHAR},
+			</if>
+			<if test="subOrderId != null">
+				sub_order_id = #{subOrderId,jdbcType=BIGINT},
+			</if>
+			<if test="confirmTime != null">
+				confirm_time = #{confirmTime,jdbcType=DATE},
+			</if>
+			<if test="prepayOrderCode != null">
+				prepay_order_code = #{prepayOrderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="isShow != null">
+				is_show = #{isShow,jdbcType=TINYINT},
+			</if>
+		</set>
+		where
+		<if test="orderId != null">
+			order_id= #{orderId,jdbcType=BIGINT}
+		</if>
+		<if test="orderId == null">
+			<if test="orderCode != null">
+				order_code = #{orderCode,jdbcType=VARCHAR}
+			</if>
+		</if>
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.mobile.blue.launcher.model.AppOrder">
+		update bjwg_order
+		set order_code = #{orderCode,jdbcType=VARCHAR},
+		ctime =
+		#{ctime,jdbcType=TIMESTAMP},
+		type = #{type,jdbcType=TINYINT},
+		status =
+		#{status,jdbcType=TINYINT},
+		num = #{num,jdbcType=SMALLINT},
+		price =
+		#{price,jdbcType=DECIMAL},
+		total_money =
+		#{totalMoney,jdbcType=DECIMAL},
+		pay_time =
+		#{payTime,jdbcType=TIMESTAMP},
+		user_id = #{userId,jdbcType=BIGINT},
+		remark = #{remark,jdbcType=VARCHAR},
+		product_name =
+		#{productName,jdbcType=VARCHAR},
+		pay_type =
+		#{payType,jdbcType=TINYINT},
+		relation_id =
+		#{relationId,jdbcType=BIGINT},
+		relation_name =
+		#{relationName,jdbcType=VARCHAR},
+		over_time =
+		#{overTime,jdbcType=TIMESTAMP},
+		product_img =
+		#{productImg,jdbcType=VARCHAR},
+		sub_order_id =
+		#{subOrderId,jdbcType=BIGINT},
+		confirm_time =
+		#{confirmTime,jdbcType=DATE},
+		prepay_order_code =
+		#{prepayOrderCode,jdbcType=VARCHAR},
+		is_show =
+		#{isShow,jdbcType=TINYINT}
+		where order_id = #{orderId,jdbcType=BIGINT}
+	</update>
+</mapper>

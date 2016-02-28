@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mobile.blue.launcher.dao.mapper.AppMyEarningsMapper">
+	<resultMap id="BaseResultMap" type="com.mobile.blue.launcher.model.AppMyEarnings">
+		<constructor>
+			<idArg column="earnings_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="rate" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+			<arg column="begin_time" jdbcType="DATE" javaType="java.util.Date" />
+			<arg column="days" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="end_time" jdbcType="DATE" javaType="java.util.Date" />
+			<arg column="money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+			<arg column="expect_earning" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+			<arg column="paincbuy_project_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="paincbuy_project_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="present_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="deal_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+			<arg column="deal_status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+			<arg column="deal_time" jdbcType="DATE" javaType="java.util.Date" />
+			<arg column="over_time" jdbcType="DATE" javaType="java.util.Date" />
+			<arg column="over_days" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="before_deal_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+		</constructor>
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		earnings_id, user_id, num, rate, begin_time, days, end_time, money,
+		expect_earning,
+		paincbuy_project_id, paincbuy_project_name, present_num, deal_type, deal_status,
+		deal_time, over_time, over_days, remark, before_deal_type
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.mobile.blue.launcher.model.Example.AppMyEarningsExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'false' as QUERYID,
+		<include refid="Base_Column_List" />
+		from bjwg_my_earnings
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="page != null">
+			limit #{page.begin} , #{page.length}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from bjwg_my_earnings
+		where earnings_id = #{earningsId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from bjwg_my_earnings
+		where earnings_id = #{earningsId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.mobile.blue.launcher.model.AppMyEarnings">
+		insert into bjwg_my_earnings (earnings_id, user_id, num,
+		rate, begin_time, days,
+		end_time, money, expect_earning,
+		paincbuy_project_id, paincbuy_project_name,
+		present_num, deal_type, deal_status,
+		deal_time, over_time, over_days,
+		remark, before_deal_type)
+		values (#{earningsId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
+		#{num,jdbcType=INTEGER},
+		#{rate,jdbcType=DECIMAL}, #{beginTime,jdbcType=DATE}, #{days,jdbcType=INTEGER},
+		#{endTime,jdbcType=DATE}, #{money,jdbcType=DECIMAL},
+		#{expectEarning,jdbcType=DECIMAL},
+		#{paincbuyProjectId,jdbcType=BIGINT},
+		#{paincbuyProjectName,jdbcType=VARCHAR},
+		#{presentNum,jdbcType=INTEGER}, #{dealType,jdbcType=TINYINT},
+		#{dealStatus,jdbcType=TINYINT},
+		#{dealTime,jdbcType=DATE}, #{overTime,jdbcType=DATE}, #{overDays,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR}, #{beforeDealType,jdbcType=TINYINT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.mobile.blue.launcher.model.AppMyEarnings">
+		insert into bjwg_my_earnings
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="earningsId != null">
+				earnings_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="num != null">
+				num,
+			</if>
+			<if test="rate != null">
+				rate,
+			</if>
+			<if test="beginTime != null">
+				begin_time,
+			</if>
+			<if test="days != null">
+				days,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="money != null">
+				money,
+			</if>
+			<if test="expectEarning != null">
+				expect_earning,
+			</if>
+			<if test="paincbuyProjectId != null">
+				paincbuy_project_id,
+			</if>
+			<if test="paincbuyProjectName != null">
+				paincbuy_project_name,
+			</if>
+			<if test="presentNum != null">
+				present_num,
+			</if>
+			<if test="dealType != null">
+				deal_type,
+			</if>
+			<if test="dealStatus != null">
+				deal_status,
+			</if>
+			<if test="dealTime != null">
+				deal_time,
+			</if>
+			<if test="overTime != null">
+				over_time,
+			</if>
+			<if test="overDays != null">
+				over_days,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="beforeDealType != null">
+				before_deal_type,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="earningsId != null">
+				#{earningsId,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="num != null">
+				#{num,jdbcType=INTEGER},
+			</if>
+			<if test="rate != null">
+				#{rate,jdbcType=DECIMAL},
+			</if>
+			<if test="beginTime != null">
+				#{beginTime,jdbcType=DATE},
+			</if>
+			<if test="days != null">
+				#{days,jdbcType=INTEGER},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=DATE},
+			</if>
+			<if test="money != null">
+				#{money,jdbcType=DECIMAL},
+			</if>
+			<if test="expectEarning != null">
+				#{expectEarning,jdbcType=DECIMAL},
+			</if>
+			<if test="paincbuyProjectId != null">
+				#{paincbuyProjectId,jdbcType=BIGINT},
+			</if>
+			<if test="paincbuyProjectName != null">
+				#{paincbuyProjectName,jdbcType=VARCHAR},
+			</if>
+			<if test="presentNum != null">
+				#{presentNum,jdbcType=INTEGER},
+			</if>
+			<if test="dealType != null">
+				#{dealType,jdbcType=TINYINT},
+			</if>
+			<if test="dealStatus != null">
+				#{dealStatus,jdbcType=TINYINT},
+			</if>
+			<if test="dealTime != null">
+				#{dealTime,jdbcType=DATE},
+			</if>
+			<if test="overTime != null">
+				#{overTime,jdbcType=DATE},
+			</if>
+			<if test="overDays != null">
+				#{overDays,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="beforeDealType != null">
+				#{beforeDealType,jdbcType=TINYINT},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.mobile.blue.launcher.model.Example.AppMyEarningsExample"
+		resultType="java.lang.Integer">
+		select count(*) from bjwg_my_earnings
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.mobile.blue.launcher.model.AppMyEarnings">
+		update bjwg_my_earnings
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="num != null">
+				num = #{num,jdbcType=INTEGER},
+			</if>
+			<if test="rate != null">
+				rate = #{rate,jdbcType=DECIMAL},
+			</if>
+			<if test="beginTime != null">
+				begin_time = #{beginTime,jdbcType=DATE},
+			</if>
+			<if test="days != null">
+				days = #{days,jdbcType=INTEGER},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=DATE},
+			</if>
+			<if test="money != null">
+				money = #{money,jdbcType=DECIMAL},
+			</if>
+			<if test="expectEarning != null">
+				expect_earning = #{expectEarning,jdbcType=DECIMAL},
+			</if>
+			<if test="paincbuyProjectId != null">
+				paincbuy_project_id = #{paincbuyProjectId,jdbcType=BIGINT},
+			</if>
+			<if test="paincbuyProjectName != null">
+				paincbuy_project_name = #{paincbuyProjectName,jdbcType=VARCHAR},
+			</if>
+			<if test="presentNum != null">
+				present_num = #{presentNum,jdbcType=INTEGER},
+			</if>
+			<if test="dealType != null">
+				deal_type = #{dealType,jdbcType=TINYINT},
+			</if>
+			<if test="dealStatus != null">
+				deal_status = #{dealStatus,jdbcType=TINYINT},
+			</if>
+			<if test="dealTime != null">
+				deal_time = #{dealTime,jdbcType=DATE},
+			</if>
+			<if test="overTime != null">
+				over_time = #{overTime,jdbcType=DATE},
+			</if>
+			<if test="overDays != null">
+				over_days = #{overDays,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="beforeDealType != null">
+				before_deal_type = #{beforeDealType,jdbcType=TINYINT},
+			</if>
+		</set>
+		where earnings_id = #{earningsId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.mobile.blue.launcher.model.AppMyEarnings">
+		update bjwg_my_earnings
+		set user_id = #{userId,jdbcType=BIGINT},
+		num = #{num,jdbcType=INTEGER},
+		rate = #{rate,jdbcType=DECIMAL},
+		begin_time = #{beginTime,jdbcType=DATE},
+		days = #{days,jdbcType=INTEGER},
+		end_time = #{endTime,jdbcType=DATE},
+		money = #{money,jdbcType=DECIMAL},
+		expect_earning = #{expectEarning,jdbcType=DECIMAL},
+		paincbuy_project_id = #{paincbuyProjectId,jdbcType=BIGINT},
+		paincbuy_project_name = #{paincbuyProjectName,jdbcType=VARCHAR},
+		present_num = #{presentNum,jdbcType=INTEGER},
+		deal_type = #{dealType,jdbcType=TINYINT},
+		deal_status = #{dealStatus,jdbcType=TINYINT},
+		deal_time = #{dealTime,jdbcType=DATE},
+		over_time = #{overTime,jdbcType=DATE},
+		over_days = #{overDays,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR},
+		before_deal_type = #{beforeDealType,jdbcType=TINYINT}
+		where earnings_id = #{earningsId,jdbcType=BIGINT}
+	</update>
+</mapper>

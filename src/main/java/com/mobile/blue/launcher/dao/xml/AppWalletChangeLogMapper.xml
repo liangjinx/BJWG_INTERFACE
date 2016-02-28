@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mobile.blue.launcher.dao.mapper.AppWalletChangeLogMapper" >
+  <resultMap id="BaseResultMap" type="com.mobile.blue.launcher.model.AppWalletChangeLog" >
+    <constructor >
+      <idArg column="wallet_change_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="wallet_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="before_money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="change_money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="after_money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="change_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="change_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="relation_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="relation_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    wallet_change_id, wallet_id, user_id, before_money, change_money, after_money, change_type, 
+    change_time, relation_id, relation_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mobile.blue.launcher.model.Example.AppWalletChangeLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from bjwg_wallet_change
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+      <if test="page != null" >
+      limit #{page.begin} , #{page.length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bjwg_wallet_change
+    where wallet_change_id = #{walletChangeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bjwg_wallet_change
+    where wallet_change_id = #{walletChangeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mobile.blue.launcher.model.AppWalletChangeLog" >
+    insert into bjwg_wallet_change (wallet_change_id, wallet_id, user_id, 
+      before_money, change_money, after_money, 
+      change_type, change_time, relation_id, 
+      relation_type)
+    values (#{walletChangeId,jdbcType=BIGINT}, #{walletId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{beforeMoney,jdbcType=DECIMAL}, #{changeMoney,jdbcType=DECIMAL}, #{afterMoney,jdbcType=DECIMAL}, 
+      #{changeType,jdbcType=TINYINT}, #{changeTime,jdbcType=TIMESTAMP}, #{relationId,jdbcType=BIGINT}, 
+      #{relationType,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mobile.blue.launcher.model.AppWalletChangeLog" >
+    insert into bjwg_wallet_change
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="walletChangeId != null" >
+        wallet_change_id,
+      </if>
+      <if test="walletId != null" >
+        wallet_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="beforeMoney != null" >
+        before_money,
+      </if>
+      <if test="changeMoney != null" >
+        change_money,
+      </if>
+      <if test="afterMoney != null" >
+        after_money,
+      </if>
+      <if test="changeType != null" >
+        change_type,
+      </if>
+      <if test="changeTime != null" >
+        change_time,
+      </if>
+      <if test="relationId != null" >
+        relation_id,
+      </if>
+      <if test="relationType != null" >
+        relation_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="walletChangeId != null" >
+        #{walletChangeId,jdbcType=BIGINT},
+      </if>
+      <if test="walletId != null" >
+        #{walletId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="beforeMoney != null" >
+        #{beforeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changeMoney != null" >
+        #{changeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="afterMoney != null" >
+        #{afterMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changeType != null" >
+        #{changeType,jdbcType=TINYINT},
+      </if>
+      <if test="changeTime != null" >
+        #{changeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="relationId != null" >
+        #{relationId,jdbcType=BIGINT},
+      </if>
+      <if test="relationType != null" >
+        #{relationType,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mobile.blue.launcher.model.Example.AppWalletChangeLogExample" resultType="java.lang.Integer" >
+    select count(*) from bjwg_wallet_change
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mobile.blue.launcher.model.AppWalletChangeLog" >
+    update bjwg_wallet_change
+    <set >
+      <if test="walletId != null" >
+        wallet_id = #{walletId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="beforeMoney != null" >
+        before_money = #{beforeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changeMoney != null" >
+        change_money = #{changeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="afterMoney != null" >
+        after_money = #{afterMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changeType != null" >
+        change_type = #{changeType,jdbcType=TINYINT},
+      </if>
+      <if test="changeTime != null" >
+        change_time = #{changeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="relationId != null" >
+        relation_id = #{relationId,jdbcType=BIGINT},
+      </if>
+      <if test="relationType != null" >
+        relation_type = #{relationType,jdbcType=TINYINT},
+      </if>
+    </set>
+    where wallet_change_id = #{walletChangeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mobile.blue.launcher.model.AppWalletChangeLog" >
+    update bjwg_wallet_change
+    set wallet_id = #{walletId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      before_money = #{beforeMoney,jdbcType=DECIMAL},
+      change_money = #{changeMoney,jdbcType=DECIMAL},
+      after_money = #{afterMoney,jdbcType=DECIMAL},
+      change_type = #{changeType,jdbcType=TINYINT},
+      change_time = #{changeTime,jdbcType=TIMESTAMP},
+      relation_id = #{relationId,jdbcType=BIGINT},
+      relation_type = #{relationType,jdbcType=TINYINT}
+    where wallet_change_id = #{walletChangeId,jdbcType=BIGINT}
+  </update>
+</mapper>

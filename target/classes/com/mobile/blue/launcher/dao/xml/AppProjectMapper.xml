@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mobile.blue.launcher.dao.mapper.AppProjectMapper" >
+  <resultMap id="BaseResultMap" type="com.mobile.blue.launcher.model.AppProject" >
+    <constructor >
+      <idArg column="paincbuy_project_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="summary" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="imgs" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ctime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="num" jdbcType="SMALLINT" javaType="java.lang.Short" />
+      <arg column="left_num" jdbcType="SMALLINT" javaType="java.lang.Short" />
+      <arg column="total_money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="begin_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="other_fee_detail" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="other_fee" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="variety" jdbcType="TINYINT" javaType="java.lang.Byte" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mobile.blue.launcher.model.AppProject" >
+    <constructor >
+      <idArg column="paincbuy_project_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="summary" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="imgs" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ctime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="num" jdbcType="SMALLINT" javaType="java.lang.Short" />
+      <arg column="left_num" jdbcType="SMALLINT" javaType="java.lang.Short" />
+      <arg column="total_money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="begin_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="other_fee_detail" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="other_fee" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="variety" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="detail" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    paincbuy_project_id, name, summary, imgs, ctime, type, status, price, num, left_num, 
+    total_money, begin_time, end_time, other_fee_detail, other_fee, variety
+  </sql>
+  <sql id="Blob_Column_List" >
+    detail
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.mobile.blue.launcher.model.Example.AppProjectExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bjwg_panicbuy_project
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+      <if test="page != null" >
+      limit #{page.begin} , #{page.length}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mobile.blue.launcher.model.Example.AppProjectExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from bjwg_panicbuy_project
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="page != null" >
+      limit #{page.begin} , #{page.length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bjwg_panicbuy_project
+    where paincbuy_project_id = #{paincbuyProjectId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bjwg_panicbuy_project
+    where paincbuy_project_id = #{paincbuyProjectId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mobile.blue.launcher.model.AppProject" >
+    insert into bjwg_panicbuy_project (paincbuy_project_id, name, summary, 
+      imgs, ctime, type, 
+      status, price, num, 
+      left_num, total_money, begin_time, 
+      end_time, other_fee_detail, other_fee, 
+      variety, detail)
+    values (#{paincbuyProjectId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+      #{imgs,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{type,jdbcType=TINYINT}, 
+      #{status,jdbcType=TINYINT}, #{price,jdbcType=DECIMAL}, #{num,jdbcType=SMALLINT}, 
+      #{leftNum,jdbcType=SMALLINT}, #{totalMoney,jdbcType=DECIMAL}, #{beginTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{otherFeeDetail,jdbcType=VARCHAR}, #{otherFee,jdbcType=DECIMAL}, 
+      #{variety,jdbcType=TINYINT}, #{detail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mobile.blue.launcher.model.AppProject" >
+    insert into bjwg_panicbuy_project
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paincbuyProjectId != null" >
+        paincbuy_project_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="imgs != null" >
+        imgs,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="leftNum != null" >
+        left_num,
+      </if>
+      <if test="totalMoney != null" >
+        total_money,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="otherFeeDetail != null" >
+        other_fee_detail,
+      </if>
+      <if test="otherFee != null" >
+        other_fee,
+      </if>
+      <if test="variety != null" >
+        variety,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paincbuyProjectId != null" >
+        #{paincbuyProjectId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="imgs != null" >
+        #{imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=SMALLINT},
+      </if>
+      <if test="leftNum != null" >
+        #{leftNum,jdbcType=SMALLINT},
+      </if>
+      <if test="totalMoney != null" >
+        #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="otherFeeDetail != null" >
+        #{otherFeeDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="otherFee != null" >
+        #{otherFee,jdbcType=DECIMAL},
+      </if>
+      <if test="variety != null" >
+        #{variety,jdbcType=TINYINT},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mobile.blue.launcher.model.Example.AppProjectExample" resultType="java.lang.Integer" >
+    select count(*) from bjwg_panicbuy_project
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mobile.blue.launcher.model.AppProject" >
+    update bjwg_panicbuy_project
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="imgs != null" >
+        imgs = #{imgs,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=SMALLINT},
+      </if>
+      <if test="leftNum != null" >
+        left_num = #{leftNum,jdbcType=SMALLINT},
+      </if>
+      <if test="totalMoney != null" >
+        total_money = #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="otherFeeDetail != null" >
+        other_fee_detail = #{otherFeeDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="otherFee != null" >
+        other_fee = #{otherFee,jdbcType=DECIMAL},
+      </if>
+      <if test="variety != null" >
+        variety = #{variety,jdbcType=TINYINT},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where paincbuy_project_id = #{paincbuyProjectId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mobile.blue.launcher.model.AppProject" >
+    update bjwg_panicbuy_project
+    set name = #{name,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      imgs = #{imgs,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      price = #{price,jdbcType=DECIMAL},
+      num = #{num,jdbcType=SMALLINT},
+      left_num = #{leftNum,jdbcType=SMALLINT},
+      total_money = #{totalMoney,jdbcType=DECIMAL},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      other_fee_detail = #{otherFeeDetail,jdbcType=VARCHAR},
+      other_fee = #{otherFee,jdbcType=DECIMAL},
+      variety = #{variety,jdbcType=TINYINT},
+      detail = #{detail,jdbcType=LONGVARCHAR}
+    where paincbuy_project_id = #{paincbuyProjectId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mobile.blue.launcher.model.AppProject" >
+    update bjwg_panicbuy_project
+    set name = #{name,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      imgs = #{imgs,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      price = #{price,jdbcType=DECIMAL},
+      num = #{num,jdbcType=SMALLINT},
+      left_num = #{leftNum,jdbcType=SMALLINT},
+      total_money = #{totalMoney,jdbcType=DECIMAL},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      other_fee_detail = #{otherFeeDetail,jdbcType=VARCHAR},
+      other_fee = #{otherFee,jdbcType=DECIMAL},
+      variety = #{variety,jdbcType=TINYINT}
+    where paincbuy_project_id = #{paincbuyProjectId,jdbcType=BIGINT}
+  </update>
+</mapper>

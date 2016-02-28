@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mobile.blue.launcher.dao.mapper.AppCouponMapper" >
+  <resultMap id="BaseResultMap" type="com.mobile.blue.launcher.model.AppCoupon" >
+    <constructor >
+      <idArg column="my_coupon_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="coupon_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="coupon_money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="coupon_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="begin_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="coupon_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="relation_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="relation_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="coupon_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="last_use_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="can_use_money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="ctime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    my_coupon_id, coupon_name, coupon_money, coupon_id, begin_time, end_time, coupon_code, 
+    relation_id, relation_type, user_id, coupon_img, status, last_use_time, can_use_money, 
+    ctime, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mobile.blue.launcher.model.Example.AppCouponExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from bjwg_my_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+     <if test="page != null" >
+      limit #{page.begin} , #{page.length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bjwg_my_coupon
+    where my_coupon_id = #{myCouponId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bjwg_my_coupon
+    where my_coupon_id = #{myCouponId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mobile.blue.launcher.model.AppCoupon" >
+    insert into bjwg_my_coupon (my_coupon_id, coupon_name, coupon_money, 
+      coupon_id, begin_time, end_time, 
+      coupon_code, relation_id, relation_type, 
+      user_id, coupon_img, status, 
+      last_use_time, can_use_money, ctime, 
+      remark)
+    values (#{myCouponId,jdbcType=BIGINT}, #{couponName,jdbcType=VARCHAR}, #{couponMoney,jdbcType=DECIMAL}, 
+      #{couponId,jdbcType=BIGINT}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{couponCode,jdbcType=VARCHAR}, #{relationId,jdbcType=BIGINT}, #{relationType,jdbcType=TINYINT}, 
+      #{userId,jdbcType=BIGINT}, #{couponImg,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{lastUseTime,jdbcType=TIMESTAMP}, #{canUseMoney,jdbcType=DECIMAL}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mobile.blue.launcher.model.AppCoupon" >
+    insert into bjwg_my_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="myCouponId != null" >
+        my_coupon_id,
+      </if>
+      <if test="couponName != null" >
+        coupon_name,
+      </if>
+      <if test="couponMoney != null" >
+        coupon_money,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="couponCode != null" >
+        coupon_code,
+      </if>
+      <if test="relationId != null" >
+        relation_id,
+      </if>
+      <if test="relationType != null" >
+        relation_type,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="couponImg != null" >
+        coupon_img,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lastUseTime != null" >
+        last_use_time,
+      </if>
+      <if test="canUseMoney != null" >
+        can_use_money,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="myCouponId != null" >
+        #{myCouponId,jdbcType=BIGINT},
+      </if>
+      <if test="couponName != null" >
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponMoney != null" >
+        #{couponMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponCode != null" >
+        #{couponCode,jdbcType=VARCHAR},
+      </if>
+      <if test="relationId != null" >
+        #{relationId,jdbcType=BIGINT},
+      </if>
+      <if test="relationType != null" >
+        #{relationType,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="couponImg != null" >
+        #{couponImg,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="lastUseTime != null" >
+        #{lastUseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="canUseMoney != null" >
+        #{canUseMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mobile.blue.launcher.model.Example.AppCouponExample" resultType="java.lang.Integer" >
+    select count(*) from bjwg_my_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mobile.blue.launcher.model.AppCoupon" >
+    update bjwg_my_coupon
+    <set >
+      <if test="couponName != null" >
+        coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponMoney != null" >
+        coupon_money = #{couponMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponCode != null" >
+        coupon_code = #{couponCode,jdbcType=VARCHAR},
+      </if>
+      <if test="relationId != null" >
+        relation_id = #{relationId,jdbcType=BIGINT},
+      </if>
+      <if test="relationType != null" >
+        relation_type = #{relationType,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="couponImg != null" >
+        coupon_img = #{couponImg,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="lastUseTime != null" >
+        last_use_time = #{lastUseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="canUseMoney != null" >
+        can_use_money = #{canUseMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where my_coupon_id = #{myCouponId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mobile.blue.launcher.model.AppCoupon" >
+    update bjwg_my_coupon
+    set coupon_name = #{couponName,jdbcType=VARCHAR},
+      coupon_money = #{couponMoney,jdbcType=DECIMAL},
+      coupon_id = #{couponId,jdbcType=BIGINT},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      coupon_code = #{couponCode,jdbcType=VARCHAR},
+      relation_id = #{relationId,jdbcType=BIGINT},
+      relation_type = #{relationType,jdbcType=TINYINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      coupon_img = #{couponImg,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      last_use_time = #{lastUseTime,jdbcType=TIMESTAMP},
+      can_use_money = #{canUseMoney,jdbcType=DECIMAL},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where my_coupon_id = #{myCouponId,jdbcType=BIGINT}
+  </update>
+</mapper>

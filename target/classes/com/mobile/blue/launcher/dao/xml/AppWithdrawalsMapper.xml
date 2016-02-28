@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mobile.blue.launcher.dao.mapper.AppWithdrawalsMapper" >
+  <resultMap id="BaseResultMap" type="com.mobile.blue.launcher.model.AppWithdrawals" >
+    <constructor >
+      <idArg column="withwradals_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="ctime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="account_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bank_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bank" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ID_card" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="auditing_man" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="auditing_man_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="auditing_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="wallet_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="card_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="card_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    withwradals_id, money, ctime, account_name, bank_code, bank, ID_card, user_id, username, 
+    status, auditing_man, auditing_man_id, auditing_time, remark, wallet_id, card_id, 
+    card_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mobile.blue.launcher.model.Example.AppWithdrawalsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from bjwg_withdrawals
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+     <if test="page != null" >
+      limit #{page.begin} , #{page.length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bjwg_withdrawals
+    where withwradals_id = #{withwradalsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bjwg_withdrawals
+    where withwradals_id = #{withwradalsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mobile.blue.launcher.model.AppWithdrawals" >
+    insert into bjwg_withdrawals (withwradals_id, money, ctime, 
+      account_name, bank_code, bank, 
+      ID_card, user_id, username, 
+      status, auditing_man, auditing_man_id, 
+      auditing_time, remark, wallet_id, 
+      card_id, card_type)
+    values (#{withwradalsId,jdbcType=BIGINT}, #{money,jdbcType=DECIMAL}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{accountName,jdbcType=VARCHAR}, #{bankCode,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, 
+      #{idCard,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{auditingMan,jdbcType=VARCHAR}, #{auditingManId,jdbcType=BIGINT}, 
+      #{auditingTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{walletId,jdbcType=BIGINT}, 
+      #{cardId,jdbcType=BIGINT}, #{cardType,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mobile.blue.launcher.model.AppWithdrawals" >
+    insert into bjwg_withdrawals
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="withwradalsId != null" >
+        withwradals_id,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="bankCode != null" >
+        bank_code,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="idCard != null" >
+        ID_card,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="auditingMan != null" >
+        auditing_man,
+      </if>
+      <if test="auditingManId != null" >
+        auditing_man_id,
+      </if>
+      <if test="auditingTime != null" >
+        auditing_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="walletId != null" >
+        wallet_id,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="withwradalsId != null" >
+        #{withwradalsId,jdbcType=BIGINT},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="auditingMan != null" >
+        #{auditingMan,jdbcType=VARCHAR},
+      </if>
+      <if test="auditingManId != null" >
+        #{auditingManId,jdbcType=BIGINT},
+      </if>
+      <if test="auditingTime != null" >
+        #{auditingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="walletId != null" >
+        #{walletId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=BIGINT},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mobile.blue.launcher.model.Example.AppWithdrawalsExample" resultType="java.lang.Integer" >
+    select count(*) from bjwg_withdrawals
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mobile.blue.launcher.model.AppWithdrawals" >
+    update bjwg_withdrawals
+    <set >
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        bank_code = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        ID_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="auditingMan != null" >
+        auditing_man = #{auditingMan,jdbcType=VARCHAR},
+      </if>
+      <if test="auditingManId != null" >
+        auditing_man_id = #{auditingManId,jdbcType=BIGINT},
+      </if>
+      <if test="auditingTime != null" >
+        auditing_time = #{auditingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="walletId != null" >
+        wallet_id = #{walletId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=BIGINT},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=TINYINT},
+      </if>
+    </set>
+    where withwradals_id = #{withwradalsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mobile.blue.launcher.model.AppWithdrawals" >
+    update bjwg_withdrawals
+    set money = #{money,jdbcType=DECIMAL},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      bank_code = #{bankCode,jdbcType=VARCHAR},
+      bank = #{bank,jdbcType=VARCHAR},
+      ID_card = #{idCard,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      username = #{username,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      auditing_man = #{auditingMan,jdbcType=VARCHAR},
+      auditing_man_id = #{auditingManId,jdbcType=BIGINT},
+      auditing_time = #{auditingTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      wallet_id = #{walletId,jdbcType=BIGINT},
+      card_id = #{cardId,jdbcType=BIGINT},
+      card_type = #{cardType,jdbcType=TINYINT}
+    where withwradals_id = #{withwradalsId,jdbcType=BIGINT}
+  </update>
+</mapper>
